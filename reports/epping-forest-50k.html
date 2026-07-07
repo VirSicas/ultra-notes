@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RACE NAME — Trail and Error</title>  <!-- CHANGE: race name -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #191F1C;
+      --surface:    #21302A;
+      --text:       #E4DFD3;
+      --muted:      #8A9990;
+      --accent:     #C07A35;
+      --rule:       #2B3831;
+      --max-w:      660px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    nav {
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--accent); }
+
+    .report-header {
+      max-width: var(--max-w);
+      margin: 1.5rem auto 0;
+      padding: 2.5rem 2rem 3rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .report-eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .report-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+
+    .report-stats {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-value {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    .report-body {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    .report-body p {
+      margin-bottom: 1.25rem;
+      font-size: 0.975rem;
+      line-height: 1.8;
+    }
+
+    .report-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 2.5rem 0 0.9rem;
+    }
+
+    .report-body h2:first-child { margin-top: 0; }
+
+    .callout {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .callout p {
+      margin-bottom: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.75rem !important;
+    }
+
+    .honest-close {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    .report-nav {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 2rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .report-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .report-nav a:hover { color: var(--accent); }
+
+    footer {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      border-top: 1px solid var(--rule);
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    @media (max-width: 580px) {
+      nav, .report-header, .report-body, .report-nav, footer { padding-left: 1rem; padding-right: 1rem; }
+      .report-stats { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     DON'T TOUCH: nav bar — same on every page
+     ═══════════════════════════════════════════ -->
+<nav>
+  <a href="/" class="nav-name">Trail and Error</a>
+  <a href="/" class="nav-back">← All reports</a>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════
+     CHANGE: race header
+     ═══════════════════════════════════════════ -->
+<div class="report-header">
+
+  <!-- Month Year · Race organiser · Distance -->
+  <p class="report-eyebrow">MONTH YEAR &nbsp;·&nbsp; RACE ORGANISER &nbsp;·&nbsp; DISTANCE</p>
+
+  <!-- Race name -->
+  <h1>RACE NAME</h1>
+
+  <!-- Stats: add or remove stat-block entries as needed -->
+  <div class="report-stats">
+
+    <div class="stat-block">
+      <span class="stat-value">0:00</span>      <!-- finish time -->
+      <span class="stat-label">Finish time</span>
+    </div>
+
+    <div class="stat-block">
+      <span class="stat-value">00k</span>       <!-- distance -->
+      <span class="stat-label">Distance</span>
+    </div>
+
+    <div class="stat-block">
+      <span class="stat-value">???</span>       <!-- anything honest: position, weather, cokes consumed -->
+      <span class="stat-label">LABEL</span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     CHANGE: your report goes here
+     ═══════════════════════════════════════════
+
+     HOW TO USE:
+     - <h2>Section heading</h2>   for a new section
+     - <p>Your text here.</p>     for a paragraph
+     - Use the callout block below for wins / damage / takeaways
+     - End with the honest-close line
+
+     ═══════════════════════════════════════════ -->
+<div class="report-body">
+
+  <p>Opening paragraph — set the scene. Why this race, what the week before was like, how you felt at the start.</p>
+
+  <h2>Section heading</h2>
+
+  <p>What happened in this part of the race.</p>
+
+  <p>Another paragraph if needed. Each block of text is its own &lt;p&gt; tag.</p>
+
+  <h2>Another section</h2>
+
+  <p>Keep going. As many sections and paragraphs as you need.</p>
+
+
+  <!-- CALLOUT BLOCK — good for wins, damage, takeaways. Copy and reuse. -->
+  <div class="callout">
+    <p class="callout-title">Wins</p>                         <!-- CHANGE: title -->
+    <p><strong>Thing that worked.</strong> Explanation.</p>   <!-- CHANGE: content -->
+    <p><strong>Another thing.</strong> Explanation.</p>
+  </div>
+
+  <div class="callout">
+    <p class="callout-title">Damage report</p>
+    <p><strong>What hurt.</strong> Explanation.</p>
+    <p><strong>What didn't work.</strong> Explanation.</p>
+  </div>
+
+
+  <!-- HONEST CLOSE — the one line that sums it up -->
+  <p class="honest-close">The one sentence that's the real truth of this race.</p>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     CHANGE: links to previous and next report
+     Leave <span></span> if there's no previous or no next
+     ═══════════════════════════════════════════ -->
+<div class="report-nav">
+  <a href="previous-race.html">← Previous race</a>     <!-- CHANGE or replace with <span></span> -->
+  <a href="next-race.html">Next race →</a              <!-- CHANGE or replace with <span></span> -->
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     DON'T TOUCH: footer — same on every page
+     ═══════════════════════════════════════════ -->
+<footer>
+  <span>Trail and Error &nbsp;·&nbsp; Virginia Silió</span>
+  <a href="https://yourusername.github.io/cv">CV &amp; research →</a>
+</footer>
+
+</body>
+</html>
