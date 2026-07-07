@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Country to Capital 70k — Trail and Error</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #191F1C;
+      --surface:    #21302A;
+      --text:       #E4DFD3;
+      --muted:      #8A9990;
+      --accent:     #C07A35;
+      --rule:       #2B3831;
+      --max-w:      660px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    /* ── Nav ── */
+    nav {
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--accent); }
+
+    /* ── Report header ── */
+    .report-header {
+      max-width: var(--max-w);
+      margin: 1.5rem auto 0;
+      padding: 2.5rem 2rem 3rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .report-eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .report-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+
+    .report-stats {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-block { }
+
+    .stat-value {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    /* ── Report body ── */
+    .report-body {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    .report-body p {
+      margin-bottom: 1.25rem;
+      font-size: 0.975rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .report-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 2.5rem 0 0.9rem;
+      color: var(--text);
+    }
+
+    .report-body h2:first-child { margin-top: 0; }
+
+    /* Callout block — used for "what worked" / "what hurt" etc */
+    .callout {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .callout p {
+      margin-bottom: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    .callout-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.75rem !important;
+    }
+
+    /* Honest closing line */
+    .honest-close {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    /* ── Nav between reports ── */
+    .report-nav {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 2rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .report-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .report-nav a:hover { color: var(--accent); }
+
+    /* ── Footer ── */
+    footer {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      border-top: 1px solid var(--rule);
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    @media (max-width: 580px) {
+      nav, .report-header, .report-body, .report-nav, footer { padding-left: 1rem; padding-right: 1rem; }
+      .report-stats { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-name">Trail and Error</a>
+  <a href="/" class="nav-back">← All reports</a>
+</nav>
+
+<div class="report-header">
+  <p class="report-eyebrow">January 2026 &nbsp;·&nbsp; Wendover to Little Venice &nbsp;·&nbsp; 70k</p>
+  <h1>Country to Capital</h1>
+  <div class="report-stats">
+    <div class="stat-block">
+      <span class="stat-value">7:18</span>
+      <span class="stat-label">Finish time</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-value">2nd</span>
+      <span class="stat-label">Age category</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-value">Top 10</span>
+      <span class="stat-label">Female</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-value">−5°C</span>
+      <span class="stat-label">Conditions</span>
+    </div>
+  </div>
+</div>
+
+<div class="report-body">
+
+  <p>I'd wanted to do this race for a long time. There's something about a point-to-point that appeals — you start somewhere, you end somewhere else, and the distance in between is the whole point. Wendover to Little Venice, trail then towpath, 70k in January. I was ready.</p>
+
+  <h2>The first half: trail</h2>
+
+  <p>I stuck with a pack for navigation through the trail section, which the race director had specifically advised against. I'd do it again. I was checking every turn on my watch anyway, and we were accurate the whole way. No errors, not a single wrong turn. For someone who considers herself rubbish at trail running, I'll take that.</p>
+
+  <p>Around mile 10, my nose started bleeding and didn't stop for about an hour. There's not much to say about that. It was annoying. I kept running. Eventually it stopped.</p>
+
+  <p>The conditions underfoot were relentless — ice, then mud, then ice again, cycling through for most of the first section. Cold pockets in the low parts of the trail. By the time I hit the towpath I was already tired in ways that didn't fully register yet.</p>
+
+  <h2>The second half: towpath</h2>
+
+  <p>Started the towpath section well, hitting around 5:45 pace. Walking a bit after each checkpoint while eating my banana, which was the plan. It was working.</p>
+
+  <p>Then, with about 15k to go, something shifted. The thoughts started quietly and then got loud. <em>You're an impostor. You can't do this. Why are you so slow on a flat section?</em> I've done enough races to know dark patches exist, but I've never had it hit like this — not this specific flavour of it. The kind that feels like a verdict, not just a bad mile.</p>
+
+  <p>Watching sub-7 slip away didn't help. I was exhausted and profoundly lonely out there. The towpath is busy in one sense — cyclists, dogs, joggers — but none of them are with you, and that distance between you and everyone else, when you're already falling apart, is its own kind of brutal.</p>
+
+  <p>The last 6k I put a song on repeat and ran slowly. The floating towpath sections made me dizzy so I walked those. Physically I could keep moving. Mentally I was somewhere else, and I really needed someone to just be there. That part was hard in a way I hadn't expected and hadn't trained for.</p>
+
+  <p>But I kept moving, and I finished.</p>
+
+  <h2>What actually went well</h2>
+
+  <div class="callout">
+    <p class="callout-title">Wins</p>
+    <p><strong>Nutrition.</strong> Gels, PF gummies, jelly beans, banana at every checkpoint, water and electrolytes throughout. Zero stomach issues. The best I've ever fuelled in a race or training run. It finally clicked — and for someone with celiac disease and lactose intolerance navigating race nutrition, getting through 70k with no gut drama is not a small thing.</p>
+    <p><strong>Navigation.</strong> Perfect execution. No errors.</p>
+    <p><strong>The start.</strong> Being at that start line for a race I'd wanted to do for ages felt genuinely good.</p>
+  </div>
+
+  <h2>What hurt</h2>
+
+  <div class="callout">
+    <p class="callout-title">Damage report</p>
+    <p>Tibialis and ankle stabilisers got properly destroyed in the trail section. I hate shoes with structure. Calves: very tight. Core: strange DOMS-like pain around the ribs — never had that before. No cramps, quads walked away fine. The cold was deep: freezing wind on the second half, cold pockets throughout the first.</p>
+  </div>
+
+  <h2>After the race</h2>
+
+  <p>On my way home, a man deliberately tripped me. When I was on the ground he pretended to help me up and was trying to touch me. I didn't eat properly for a while after that. I don't think it's complicated why.</p>
+
+  <p>Then came what felt like a sugar crash — shaking hands, cold, nauseous, heart rate spiking. Got some sugar in and felt better after about 30 minutes, but nauseous for longer. Couldn't eat properly until the next day. Probably a combination of the not-eating and post-ultra physiology: blood sugar regulation is genuinely fragile after 70k, and the stress of what happened didn't help.</p>
+
+  <h2>What I'm taking away</h2>
+
+  <p>I can nail the practical stuff. Pacing, nutrition, navigation — even in January, on ice and mud, in -5°C with a nosebleed. That's real. What I don't have yet are the tools for when it gets dark in the final stages. The physical and logistical execution was good. The psychological work when exhausted and alone — that's what I'm taking into the next one.</p>
+
+  <p>Sub-7 was there. That's encouraging and frustrating in equal measure, but mostly encouraging. I finished 2nd in my age category, top 10 female overall.</p>
+
+  <p class="honest-close">Country to Capital, I'll be back.</p>
+
+</div>
+
+<div class="report-nav">
+  <a href="epping-forest-50k.html">← Epping Forest 50k</a>
+  <a href="beyond-trails-55k.html">Beyond Trails 55k →</a>
+</div>
+
+<footer>
+  <span>Trail and Error &nbsp;·&nbsp; Virginia Silió</span>
+  <a href="https://yourusername.github.io/cv">CV &amp; research →</a>
+</footer>
+
+</body>
+</html>

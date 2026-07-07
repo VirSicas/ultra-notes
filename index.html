@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trail and Error</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #191F1C;
+      --surface:     #21302A;
+      --surface-2:   #1D2721;
+      --text:        #E4DFD3;
+      --muted:       #8A9990;
+      --accent:      #C07A35;
+      --accent-dim:  #7A5023;
+      --rule:        #2B3831;
+      --max-w:       720px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    /* ── Nav ── */
+    nav {
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .nav-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.75rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: var(--max-w);
+      margin: 2rem auto 0;
+      padding: 3rem 2rem 3.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 440px;
+      line-height: 1.65;
+    }
+
+    /* ── Reports list ── */
+    .reports {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .reports-header {
+      padding: 2.5rem 0 1.25rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    /* Race card — the honest line is the signature element */
+    .race-card {
+      border-bottom: 1px solid var(--rule);
+      padding: 1.75rem 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+
+    .race-card:last-child { border-bottom: none; }
+
+    .race-card:hover .race-title { color: var(--accent); }
+
+    .race-meta {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+      grid-column: 1;
+    }
+
+    .race-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
+      grid-column: 1;
+    }
+
+    .race-summary {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+      grid-column: 1;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    /* Signature element: the honest line — what the race was actually about */
+    .honest-line {
+      grid-column: 1 / -1;
+      font-size: 0.8rem;
+      color: var(--accent);
+      border-top: 1px solid var(--rule);
+      padding-top: 0.75rem;
+      margin-top: 0.25rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .honest-line::before {
+      content: '↳ ';
+      opacity: 0.6;
+    }
+
+    .race-stats {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-start;
+      gap: 0.3rem;
+      grid-row: 1 / 4;
+      grid-column: 2;
+      padding-top: 0.1rem;
+    }
+
+    .stat {
+      text-align: right;
+    }
+
+    .stat-value {
+      display: block;
+      font-size: 1.1rem;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+    }
+
+    /* ── About ── */
+    .about {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 3.5rem 2rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .about h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .about p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .about p:last-child { margin-bottom: 0; }
+
+    .about a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .about a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    footer {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 1.75rem 2rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ── Responsive ── */
+    @media (max-width: 580px) {
+      nav { padding: 1rem; }
+      .hero, .reports, .about, footer { padding-left: 1rem; padding-right: 1rem; }
+      .race-stats { display: none; }
+      .race-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-name">Trail and Error</a>
+  <ul class="nav-links">
+    <li><a href="#reports">Reports</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <p class="hero-eyebrow">Ultra race reports</p>
+  <h1>Trail<br>and Error</h1>
+  <p class="hero-sub">Honest accounts of running very long distances. Written from a female perspective, without the marketing version. The good miles and the dark ones.</p>
+</div>
+
+<div class="reports" id="reports">
+  <p class="reports-header">Reports — 3 races</p>
+
+  <a href="reports/beyond-trails-55k.html" class="race-card">
+    <p class="race-meta">June 2026 &nbsp;·&nbsp; Beyond Trails UK</p>
+    <h2 class="race-title">Beyond Trails 55k</h2>
+    <p class="race-summary">Woolwich to Richmond. Started from home because that was the whole appeal. No build, no target time — just an adventure that turned into a lesson in what happens when fuelling stops working at 40k.</p>
+    <div class="race-stats">
+      <div class="stat">
+        <span class="stat-value">6:40</span>
+        <span class="stat-label">Finish</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">55k</span>
+        <span class="stat-label">Distance</span>
+      </div>
+    </div>
+    <p class="honest-line">Rescued by three cokes I hate. Finished on stubbornness.</p>
+  </a>
+
+  <a href="reports/country-to-capital.html" class="race-card">
+    <p class="race-meta">January 2026 &nbsp;·&nbsp; Wendover to Little Venice</p>
+    <h2 class="race-title">Country to Capital 70k</h2>
+    <p class="race-summary">Trail then towpath, January, -5°C, ice then mud then ice again. Nutrition finally clicked. The practical execution was good. The last 15k nearly broke me mentally in a way I hadn't experienced before.</p>
+    <div class="race-stats">
+      <div class="stat">
+        <span class="stat-value">7:18</span>
+        <span class="stat-label">Finish</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">2nd</span>
+        <span class="stat-label">Age cat</span>
+      </div>
+    </div>
+    <p class="honest-line">The physical execution was good. The psychological tools weren't there yet.</p>
+  </a>
+
+  <a href="reports/epping-forest-50k.html" class="race-card">
+    <p class="race-meta">October 2025 &nbsp;·&nbsp; Epping Forest Ultra</p>
+    <h2 class="race-title">Epping Forest 50k</h2>
+    <p class="race-summary">Hadn't run a trail since December. Work bomb on Thursday, hips destroyed by coding all of Friday. Started anxious, found my rhythm with two strangers, got lost twice, nearly cried at the finish — happy tears.</p>
+    <div class="race-stats">
+      <div class="stat">
+        <span class="stat-value">50k</span>
+        <span class="stat-label">Distance</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">✓</span>
+        <span class="stat-label">Finished</span>
+      </div>
+    </div>
+    <p class="honest-line">Simon from the race saved the navigation. I'll be back with trail legs next time.</p>
+  </a>
+
+</div>
+
+<div class="about" id="about">
+  <h2>About this site</h2>
+  <p>I'm Virginia — imaging scientist, ultramarathon runner, working parent. I race in the UK and write about it here. These reports are honest: the fuelling that didn't work, the negative thoughts in the final miles, the people who helped, and the times I nearly called it.</p>
+  <p>There are plenty of race reports written from a place of relentless positivity and personal-best obsession. This isn't that. It's about finishing, and everything that happens between the start line and the end.</p>
+  <p>I'm also a researcher. You can find my professional work over at <a href="https://yourusername.github.io/cv">my CV site</a>.</p>
+</div>
+
+<footer>
+  <span>Trail and Error &nbsp;·&nbsp; Virginia Silió</span>
+  <a href="https://yourusername.github.io/cv">CV &amp; research →</a>
+</footer>
+
+</body>
+</html>
