@@ -1,6 +1,6 @@
 # Trail and Error
 
-**Live site: https://virsicas.github.io/trail-and-error**
+**Live site: https://virsicas.github.io/ultra-notes**
 
 Honest ultra race reports. Written from a female perspective, without the marketing version — the good miles and the dark ones.
 
